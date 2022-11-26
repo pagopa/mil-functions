@@ -15,11 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mockito;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 @TestHTTPEndpoint(ServicesResource.class)
@@ -35,7 +34,7 @@ public class ServicesResourceTest {
         labels1.setEn("Payment of pagoPA Notices");
 
         Service service1 = new Service();
-        service1.setServiceId(UUID.fromString("19386e0c-aec5-4f88-b8bc-667667fa18a9"));
+        service1.setServiceId("19386e0c-aec5-4f88-b8bc-667667fa18a9");
         service1.setLabels(labels1);
 
         Labels labels2 = new Labels();
@@ -43,11 +42,11 @@ public class ServicesResourceTest {
         labels2.setEn("Government Initiatives");
 
         Service service2 = new Service();
-        service2.setServiceId(UUID.fromString("cdc24144-b7db-40e8-9e37-969f3aef5e40"));
+        service2.setServiceId("cdc24144-b7db-40e8-9e37-969f3aef5e40");
         service2.setLabels(labels1);
 
         Services services = new Services();
-        services.setServices(new Service[]{service1, service2});
+        services.setServices(List.of(service1, service2));
 
         ServicesEntity servicesEntity = new ServicesEntity();
         servicesEntity.channel = Channel.ATM;

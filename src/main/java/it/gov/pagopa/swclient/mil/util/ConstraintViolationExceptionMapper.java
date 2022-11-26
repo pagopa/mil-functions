@@ -8,16 +8,18 @@ import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Provider
 public class ConstraintViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
     @Override
     public Response toResponse(ConstraintViolationException e) {
-        Violation[] violationArray = e.getConstraintViolations().stream()
+        List<Violation> violationList = e.getConstraintViolations().stream()
                 .map(c -> new Violation(c.getMessage()))
-                .toArray(Violation[]::new);
+                .toList();
 
-        Violations violations = new Violations(violationArray);
+        Violations violations = new Violations(violationList);
 
         Log.error(violations);
 

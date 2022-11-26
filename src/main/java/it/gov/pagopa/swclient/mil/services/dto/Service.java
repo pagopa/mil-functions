@@ -1,22 +1,23 @@
 package it.gov.pagopa.swclient.mil.services.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.StringJoiner;
-import java.util.UUID;
 
 public class Service {
     @NotNull(message = "labels must not be null")
     private Labels labels;
 
     @NotNull(message = "serviceId must not be null")
-    private UUID serviceId;
+    @Pattern(regexp = "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$", message="serviceId must match {regexp}")
+    private String serviceId;
 
     public Service() {
     }
 
-    public Service(Labels labels, UUID serviceId) {
+    public Service(Labels labels, String serviceId) {
         this.labels = labels;
-        this.serviceId = serviceId;
+        this.serviceId = serviceId.toString();
     }
 
     public Labels getLabels() {
@@ -27,11 +28,11 @@ public class Service {
         this.labels = labels;
     }
 
-    public UUID getServiceId() {
+    public String getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(UUID serviceId) {
+    public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
     }
 
