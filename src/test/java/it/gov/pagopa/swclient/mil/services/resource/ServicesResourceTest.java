@@ -61,7 +61,8 @@ public class ServicesResourceTest {
 	@Test
 	public void testGetServices_200() {
 		given()
-			.headers("Version", "1.0.0",
+			.headers("RequestId", "1de3c885-5584-4910-b43a-4ad6e3fd55f9",
+				"Version", "1.0.0",
 				"AcquirerId", "12345",
 				"Channel", "ATM",
 				"TerminalId", "12345678")
@@ -74,7 +75,8 @@ public class ServicesResourceTest {
 	@Test
 	public void testGetServices_404() {
 		given()
-			.headers("Version", "1.0.0",
+			.headers("RequestId", "1de3c885-5584-4910-b43a-4ad6e3fd55f9",
+				"Version", "1.0.0",
 				"AcquirerId", "12345",
 				"Channel", "POS",
 				"TerminalId", "12345678")
