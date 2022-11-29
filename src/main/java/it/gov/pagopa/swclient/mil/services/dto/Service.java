@@ -1,47 +1,65 @@
+/*
+ * Service.java
+ *
+ * 29 nov 2022
+ */
 package it.gov.pagopa.swclient.mil.services.dto;
-
-import java.util.StringJoiner;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import it.gov.pagopa.swclient.mil.services.util.ErrorCode;
+
+/**
+ * 
+ * @author Antonio Tarricone
+ */
 public class Service {
-	@NotNull(message = "labels must not be null")
+	/*
+	 * 
+	 */
+	@NotNull(message = "[" + ErrorCode.LABELS_MUST_NOT_BE_NULL + "] labels must not be null")
 	private Labels labels;
 
-	@NotNull(message = "serviceId must not be null")
-	@Pattern(regexp = "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$", message = "serviceId must match {regexp}")
+	/*
+	 * 
+	 */
+	@NotNull(message = "[" + ErrorCode.SERVICE_ID_MUST_NOT_BE_NULL + "] serviceId must not be null")
+	@Pattern(regexp = "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$", message = "[" + ErrorCode.SERVICE_ID_MUST_MATCH_REGEXP + "] serviceId must match \"{regexp}\"")
 	private String serviceId;
 
-	public Service() {
-	}
-
-	public Service(Labels labels, String serviceId) {
-		this.labels = labels;
-		this.serviceId = serviceId.toString();
-	}
-
+	/**
+	 * @return the labels
+	 */
 	public Labels getLabels() {
 		return labels;
 	}
 
+	/**
+	 * @param labels the labels to set
+	 */
 	public void setLabels(Labels labels) {
 		this.labels = labels;
 	}
 
+	/**
+	 * @return the serviceId
+	 */
 	public String getServiceId() {
 		return serviceId;
 	}
 
+	/**
+	 * @param serviceId the serviceId to set
+	 */
 	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
 	}
 
 	@Override
 	public String toString() {
-		return new StringJoiner(", ", Service.class.getSimpleName() + "[", "]")
-			.add("labels=" + labels)
-			.add("serviceId=" + serviceId)
-			.toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append("Service [labels=").append(labels).append(", serviceId=").append(serviceId).append("]");
+		return builder.toString();
 	}
 }

@@ -1,15 +1,29 @@
+/*
+ * ServicesEntity.java
+ *
+ * 29 nov 2022
+ */
 package it.gov.pagopa.swclient.mil.services.dao;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
-import it.gov.pagopa.swclient.mil.dto.Channel;
 import it.gov.pagopa.swclient.mil.services.dto.Services;
 
+/**
+ * 
+ * @author Antonio Tarricone
+ */
 @MongoEntity(collection = "services")
 public class ServicesEntity {
+	/*
+	 * 
+	 */
 	@BsonId
-	public Channel channel;
+	public String channel;
 
+	/*
+	 * 
+	 */
 	public Services services;
 }

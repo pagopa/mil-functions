@@ -1,6 +1,12 @@
+/*
+ * ServicesResource.java
+ *
+ * 29 nov 2022
+ */
 package it.gov.pagopa.swclient.mil.services.resource;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -23,46 +29,78 @@ import com.mongodb.MongoWriteException;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import it.gov.pagopa.swclient.mil.dto.CommonHeader;
+import it.gov.pagopa.swclient.mil.dto.Errors;
 import it.gov.pagopa.swclient.mil.services.dao.ServicesEntity;
 import it.gov.pagopa.swclient.mil.services.dao.ServicesRepository;
 import it.gov.pagopa.swclient.mil.services.dto.Services;
-import it.gov.pagopa.swclient.mil.services.util.Error;
+import it.gov.pagopa.swclient.mil.services.util.ErrorCode;
 
+/**
+ * 
+ * @author Antonio Tarricone
+ */
 @Path("/services")
 public class ServicesResource {
+	/*
+	 * 
+	 */
 	@Inject
 	ServicesRepository servicesRepository;
 
+	/**
+	 * 
+	 * @param commonHeader
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Uni<Services> getServices(@Valid @BeanParam CommonHeader commonHeader) {
-		Log.debugf("Input parameters: %s", commonHeader);
+		Log.debugf("getServices - Input parameters: %s", commonHeader);
 
 		Uni<Optional<ServicesEntity>> servicesOptional = servicesRepository.findByIdOptional(commonHeader.getChannel());
 
 		Uni<Services> services = servicesOptional
-			.map(o -> o.orElseThrow(() -> {
+			.onFailure().transform(t -> {
+				/*
+				 * DB error
+				 */
+				Log.errorf(t, "[%s] DB error while finding", ErrorCode.DB_ERROR_WHILE_FINDING);
+				return new InternalServerErrorException(Response
+					.status(Status.INTERNAL_SERVER_ERROR)
+					.entity(new Errors(List.of(ErrorCode.DB_ERROR_WHILE_FINDING)))
+					.build());
+			})
+			.onItem().transform(o -> o.orElseThrow(() -> {
 				/*
 				 * If 'optional' item is present return it, otherwise throw NotFoundException.
 				 */
-				Log.warnf("[%s] Services not found for channel %s.", Error.SERVICES_NOT_FOUND, commonHeader.getChannel());
-				return new NotFoundException(Error.SERVICES_NOT_FOUND);
+				Log.warnf("[%s] Services not found for channel %s", ErrorCode.SERVICES_NOT_FOUND, commonHeader.getChannel());
+				return new NotFoundException(Response
+					.status(Status.NOT_FOUND)
+					.entity(new Errors(List.of(ErrorCode.SERVICES_NOT_FOUND)))
+					.build());
 			}))
 			.map(e -> {
 				/*
 				 * Get services from entity
 				 */
-				Log.debugf("Output parameters: %s", e.services);
+				Log.debugf("getServices - Output parameters: %s", e.services);
 				return e.services;
 			});
 
 		return services;
 	}
 
+	/**
+	 * 
+	 * @param commonHeader
+	 * @param services
+	 * @return
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Uni<Response> postServices(@Valid @BeanParam CommonHeader commonHeader, @Valid Services services) {
-		Log.debugf("Input parameters: %s, %s", commonHeader, services);
+		Log.debugf("postServices - Input parameters: %s, %s", commonHeader, services);
 
 		ServicesEntity servicesEntity = new ServicesEntity();
 		servicesEntity.channel = commonHeader.getChannel();
@@ -81,25 +119,35 @@ public class ServicesResource {
 				/*
 				 * If a failure is returned, throw the right exception.
 				 */
-				Log.fatal(t);
 				if (t instanceof MongoWriteException m) {
 					if (m.getCode() == 11000) {
 						/*
 						 * Duplicate key
 						 */
-						Log.warnf("[%s] Duplicate key for %s.", Error.DUPLICATE_KEY, commonHeader.getChannel());
-						return new WebApplicationException(Error.DUPLICATE_KEY, Status.CONFLICT);
+						Log.warnf(m, "[%s] Duplicate key for %s", ErrorCode.DUPLICATE_KEY, commonHeader.getChannel());
+						return new WebApplicationException(Response
+							.status(Status.CONFLICT)
+							.entity(new Errors(List.of(ErrorCode.DUPLICATE_KEY)))
+							.build());
 					} else {
 						/*
 						 * Other error
 						 */
-						return new InternalServerErrorException(Error.ERROR_WHILE_PERSISTING);
+						Log.errorf(t, "[%s] DB error while persisting", ErrorCode.DB_ERROR_WHILE_PERSISTING);
+						return new InternalServerErrorException(Response
+							.status(Status.INTERNAL_SERVER_ERROR)
+							.entity(new Errors(List.of(ErrorCode.DB_ERROR_WHILE_PERSISTING)))
+							.build());
 					}
 				} else {
 					/*
 					 * DB error
 					 */
-					return new InternalServerErrorException(Error.ERROR_WHILE_PERSISTING);
+					Log.errorf(t, "[%s] DB error while persisting", ErrorCode.DB_ERROR_WHILE_PERSISTING);
+					return new InternalServerErrorException(Response
+						.status(Status.INTERNAL_SERVER_ERROR)
+						.entity(new Errors(List.of(ErrorCode.DB_ERROR_WHILE_PERSISTING)))
+						.build());
 				}
 			});
 

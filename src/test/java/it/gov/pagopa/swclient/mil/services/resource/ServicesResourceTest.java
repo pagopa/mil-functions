@@ -1,3 +1,8 @@
+/*
+ * ServicesResourceTest.java
+ *
+ * 29 nov 2022
+ */
 package it.gov.pagopa.swclient.mil.services.resource;
 
 import static io.restassured.RestAssured.given;
@@ -14,20 +19,29 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.smallrye.mutiny.Uni;
-import it.gov.pagopa.swclient.mil.dto.Channel;
 import it.gov.pagopa.swclient.mil.services.dao.ServicesEntity;
 import it.gov.pagopa.swclient.mil.services.dao.ServicesRepository;
 import it.gov.pagopa.swclient.mil.services.dto.Labels;
 import it.gov.pagopa.swclient.mil.services.dto.Service;
 import it.gov.pagopa.swclient.mil.services.dto.Services;
 
+/**
+ * 
+ * @author Antonio Tarricone
+ */
 @QuarkusTest
 @TestHTTPEndpoint(ServicesResource.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ServicesResourceTest {
+class ServicesResourceTest {
+	/*
+	 * 
+	 */
 	@InjectMock
 	ServicesRepository servicesRepository;
 
+	/**
+	 * 
+	 */
 	@BeforeAll
 	public void setup() {
 		Labels labels1 = new Labels();
@@ -50,16 +64,19 @@ public class ServicesResourceTest {
 		services.setServices(List.of(service1, service2));
 
 		ServicesEntity servicesEntity = new ServicesEntity();
-		servicesEntity.channel = Channel.ATM;
+		servicesEntity.channel = "ATM";
 		servicesEntity.services = services;
 
 		Uni<Optional<ServicesEntity>> servicesEntityOptionalUni = Uni.createFrom().item(Optional.of(servicesEntity));
 
-		Mockito.when(servicesRepository.findByIdOptional(Channel.ATM)).thenReturn(servicesEntityOptionalUni);
+		Mockito.when(servicesRepository.findByIdOptional("ATM")).thenReturn(servicesEntityOptionalUni);
 	}
 
+	/**
+	 * 
+	 */
 	@Test
-	public void testGetServices_200() {
+	void testGetServices_200() {
 		given()
 			.headers("RequestId", "1de3c885-5584-4910-b43a-4ad6e3fd55f9",
 				"Version", "1.0.0",
@@ -72,8 +89,11 @@ public class ServicesResourceTest {
 			.statusCode(200);
 	}
 
+	/**
+	 * 
+	 */
 	@Test
-	public void testGetServices_404() {
+	void testGetServices_404() {
 		given()
 			.headers("RequestId", "1de3c885-5584-4910-b43a-4ad6e3fd55f9",
 				"Version", "1.0.0",
