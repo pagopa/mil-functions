@@ -28,12 +28,12 @@ import com.mongodb.MongoWriteException;
 
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
-import it.gov.pagopa.swclient.mil.dto.CommonHeader;
-import it.gov.pagopa.swclient.mil.dto.Errors;
+import it.gov.pagopa.swclient.mil.bean.CommonHeader;
+import it.gov.pagopa.swclient.mil.bean.Errors;
+import it.gov.pagopa.swclient.mil.services.ErrorCode;
+import it.gov.pagopa.swclient.mil.services.bean.Services;
 import it.gov.pagopa.swclient.mil.services.dao.ServicesEntity;
 import it.gov.pagopa.swclient.mil.services.dao.ServicesRepository;
-import it.gov.pagopa.swclient.mil.services.dto.Services;
-import it.gov.pagopa.swclient.mil.services.util.ErrorCode;
 
 /**
  * 

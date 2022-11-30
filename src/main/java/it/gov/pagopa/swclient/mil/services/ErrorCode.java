@@ -3,7 +3,7 @@
  *
  * 26 nov 2022
  */
-package it.gov.pagopa.swclient.mil.services.util;
+package it.gov.pagopa.swclient.mil.services;
 
 /**
  * 

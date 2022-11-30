@@ -19,11 +19,11 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.smallrye.mutiny.Uni;
+import it.gov.pagopa.swclient.mil.services.bean.Labels;
+import it.gov.pagopa.swclient.mil.services.bean.Service;
+import it.gov.pagopa.swclient.mil.services.bean.Services;
 import it.gov.pagopa.swclient.mil.services.dao.ServicesEntity;
 import it.gov.pagopa.swclient.mil.services.dao.ServicesRepository;
-import it.gov.pagopa.swclient.mil.services.dto.Labels;
-import it.gov.pagopa.swclient.mil.services.dto.Service;
-import it.gov.pagopa.swclient.mil.services.dto.Services;
 
 /**
  * 

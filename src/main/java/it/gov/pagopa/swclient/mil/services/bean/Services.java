@@ -3,14 +3,14 @@
  *
  * 29 nov 2022
  */
-package it.gov.pagopa.swclient.mil.services.dto;
+package it.gov.pagopa.swclient.mil.services.bean;
 
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import it.gov.pagopa.swclient.mil.services.util.ErrorCode;
+import it.gov.pagopa.swclient.mil.services.ErrorCode;
 
 /**
  * 
