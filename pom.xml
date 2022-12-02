@@ -5,11 +5,17 @@
 	<parent>
 		<groupId>it.gov.pagopa.swclient.mil</groupId>
 		<artifactId>bom</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
+	
+	<properties>
+		<!-- WARNING: This must be equal to parent/version value! -->
+		<bom.version>1.0.0</bom.version>
+		<common.version>1.0.2</common.version>
+	</properties>
 
 	<artifactId>functions</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<description>Handling of end-user services for Multi-channel Integration Layer of SW Client Project</description>
 
@@ -41,7 +47,7 @@
 		<dependency>
 			<groupId>it.gov.pagopa.swclient.mil</groupId>
 			<artifactId>common</artifactId>
-			<version>1.0.2-SNAPSHOT</version>
+			<version>${common.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -72,6 +78,42 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>2.0.0-M3</version>
+				<configuration>
+					<mavenHome>${maven.home}</mavenHome>
+					<goals>install</goals>
+				</configuration>
+				<executions>
+					<execution>
+						<id>clone_and_install_mil-bom</id>
+						<phase>validate</phase>
+						<configuration>
+							<connectionUrl>scm:git:https://github.com/pagopa/mil-bom.git</connectionUrl>
+							<scmVersionType>tag</scmVersionType>
+							<scmVersion>${bom.version}</scmVersion>
+						</configuration>
+						<goals>
+							<goal>bootstrap</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>clone_and_install_mil-common</id>
+						<phase>validate</phase>
+						<configuration>
+							<connectionUrl>scm:git:https://github.com/pagopa/mil-common.git</connectionUrl>
+							<scmVersionType>tag</scmVersionType>
+							<scmVersion>${common.version}</scmVersion>
+						</configuration>
+						<goals>
+							<goal>bootstrap</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
 				<groupId>${quarkus.platform.group-id}</groupId>
 				<artifactId>quarkus-maven-plugin</artifactId>
 				<version>${quarkus.platform.version}</version>
@@ -86,6 +128,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${compiler-plugin.version}</version>
@@ -102,6 +145,7 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
@@ -112,6 +156,7 @@
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
@@ -123,8 +168,7 @@
 						</goals>
 						<configuration>
 							<systemPropertyVariables>
-								<native.image.path>${project.build.directory}/${project.build.finalName}-runner
-                                </native.image.path>
+								<native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
 								<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
 								<maven.home>${maven.home}</maven.home>
 							</systemPropertyVariables>

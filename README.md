@@ -13,7 +13,7 @@ docker run -d -p 27017:27017 --name test-mongo mongo:latest
 ## How to play locally with native image
 ### Build native image
 ```shell script
-mvn package -Pnative -Dquarkus.native.container-build=true -Dquarkus-profile=playground
+mvn package -Pnative -Dquarkus.native.container-build=true -Dquarkus-profile=playground -Dmaven.home=<path to maven home>
 docker build -f src/main/docker/Dockerfile.native-micro -t pagopa/mil-functions .
 ```
 
