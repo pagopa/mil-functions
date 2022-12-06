@@ -1,0 +1,17 @@
+name: Build native image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  native_build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Build native executable and upload it as an artifact
+        uses: maxday/quarkus-native-build-docker-action@1
+          outputName: mil-functions-runner
+          dockerfilePath: Dockerfile.native-micro
