@@ -1,8 +1,6 @@
 name: Pull-request pre-validation
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -28,7 +26,7 @@ jobs:
 
     - name: Execute unit-testing and SCA with Quality Gate
       run: |
-       export $SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
+       export $SONAR_TOKEN='${{ secrets.SONAR_TOKEN }}'
        mvn clean test -Pvalidate 
 
     - name: Update dependency graph
