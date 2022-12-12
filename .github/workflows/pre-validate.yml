@@ -23,7 +23,11 @@ jobs:
     - name: Build dependencies with Maven
       run: mvn clean validate -Pbootstrap
 
-    - name: Execute unit-testing and SCA with Quality Gate
+    #- name: Execute unit-testing and SCA with Quality Gate
+    #  run: |
+    #   export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
+    #   mvn clean test -Pvalidate
+
+    - name: Execute unit-testing
       run: |
-       export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
-       mvn clean test -Pvalidate 
+       mvn clean test
