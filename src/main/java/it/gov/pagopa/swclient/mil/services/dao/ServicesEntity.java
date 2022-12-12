@@ -14,7 +14,7 @@ import it.gov.pagopa.swclient.mil.services.bean.Services;
  * 
  * @author Antonio Tarricone
  */
-@MongoEntity(collection = "services")
+@MongoEntity(database = "mil", collection = "services")
 public class ServicesEntity {
 	/*
 	 * 
