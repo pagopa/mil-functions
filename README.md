@@ -1,11 +1,13 @@
 # Multi-channel Integration Layer Functions
-Handling of service list for Multi-channel Integration Layer of SW Client Project
+Handling of service list for Multi-channel Integration Layer of SW Client Project.
 
 ## Dependencies
 This project depends on mil-common. If you don't want to clone and install it locally, run ```mvn validate -Dmaven.home=<path to Maven home>``` before.
 
 ## How to run dev mode
-If you want to use a local Mongo, before running the Maven goal quarkus:dev, run ```docker run -d -p 27017:27017 --name test-mongo mongo:latest```.
+```shell script
+mvn quarkus:dev
+```
 
 ## How to play locally with native image
 ### Build native image
