@@ -4,7 +4,7 @@
 
 	<groupId>it.gov.pagopa.swclient.mil</groupId>
 	<artifactId>functions</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 
 	<description>Handling of service list for Multi-channel Integration Layer of SW Client Project</description>
 
@@ -40,7 +40,7 @@
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
 
-		<common.version>1.0.2</common.version>
+		<common.version>1.0.3</common.version>
 	</properties>
 
 	<dependencyManagement>

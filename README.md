@@ -1,4 +1,4 @@
-# Multi-channel Integration Layer Functions
+# Multi-channel Integration Layer - Functions
 Handling of service list for Multi-channel Integration Layer of SW Client Project.
 
 ## Dependencies
