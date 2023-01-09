@@ -51,9 +51,9 @@ jobs:
           git config advice.addIgnoredFile false
           git add pom.xml
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
-          git tag ${{ steps.semantic.outputs.new_release_version }}
+          git tag ${{ steps.semantic.outputs.new_release_version }}.1
           git push origin main
-          git push origin ${{ steps.semantic.outputs.new_release_version }}
+          git push origin ${{ steps.semantic.outputs.new_release_version }}.1
 
       - name: Build dependencies with Maven
         run: mvn clean validate -Pbootstrap
