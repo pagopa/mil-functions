@@ -48,7 +48,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git remote set-url origin "${${{ github.repositoryUrl }}/\/\//"//${{ secrects.ACTIONS_TOKEN }}@"}""
+          git remote set-url origin "${${{ github.repositoryUrl }}/\/\//"//${{ secrets.ACTIONS_TOKEN }}@"}""
           git add pom.xml
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
           git push origin main
