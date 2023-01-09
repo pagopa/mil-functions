@@ -1,7 +1,12 @@
-name: Build native image
+name: Release e new version
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'CODEOWNERS'
+      - '**.md'
 
 env:
   REGISTRY: ghcr.io
