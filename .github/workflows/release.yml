@@ -21,7 +21,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
         
-      - name: Semantic Release
+      - name: Semantic release (dry-run)
         uses: cycjimmy/semantic-release-action@v3
         id: semantic
         env:
@@ -32,7 +32,7 @@ jobs:
           extra_plugins: |
             @semantic-release/release-notes-generator@10.0.3
             @semantic-release/git@10.0.1
-          dry_run: false
+          dry_run: true
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -48,12 +48,22 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git config advice.addIgnoredFile false
+          git remote set-url origin "${${{ github.repositoryUrl }}/\/\//"//${{ secrects.ACTIONS_TOKEN }}@"}""
           git add pom.xml
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
-          git tag ${{ steps.semantic.outputs.new_release_version }}.1
           git push origin main
-          git push origin ${{ steps.semantic.outputs.new_release_version }}.1
+
+      - name: Semantic release
+        uses: cycjimmy/semantic-release-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          semantic_version: 19
+          branch: main
+          extra_plugins: |
+            @semantic-release/release-notes-generator@10.0.3
+            @semantic-release/git@10.0.1
+          dry_run: false
 
       - name: Build dependencies with Maven
         run: mvn clean validate -Pbootstrap
