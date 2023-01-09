@@ -33,5 +33,6 @@ public final class ErrorCode {
 	public static final String DB_ERROR_WHILE_FINDING = MODULE_ID + "00000E";
 
 	private ErrorCode() {
+		// This class cannot be instantiated!
 	}
 }
