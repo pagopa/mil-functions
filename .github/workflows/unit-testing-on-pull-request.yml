@@ -1,4 +1,4 @@
-name: Pull-request pre-validation
+name: Unit test execution on pull request
 
 on:
   pull_request:
@@ -6,7 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  pre_validation:
+  unit-testing:
+    name: Unit-tesing on pull request
     runs-on: ubuntu-latest
 
     steps:
@@ -29,5 +30,4 @@ jobs:
     #   mvn clean test -Pvalidate
 
     - name: Execute unit-testing
-      run: |
-       mvn clean test
+      run: mvn clean test
