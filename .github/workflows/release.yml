@@ -50,7 +50,7 @@ jobs:
           git config user.email "<>"
           current_url=${{ github.repositoryUrl }}
           token=${{ secrets.ACTIONS_TOKEN }}
-          new_url=${current_url/\/\////$token@}
+          new_url=${current_url/git:\/\//https://$token@}
           git remote set-url origin ${new_url}
           git add pom.xml
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
