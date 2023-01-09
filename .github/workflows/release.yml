@@ -48,6 +48,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
+          git config advice.addIgnoredFile false
           git add *
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
           git tag ${{ steps.semantic.outputs.new_release_version }}
