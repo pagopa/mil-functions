@@ -1,29 +1,30 @@
-name: Release e new version
+name: Release a new version
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
-    paths-ignore:
-      - 'CODEOWNERS'
-      - '**.md'
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   release:
-    name: Release e new version
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout the repository
+      #
+      # Checkout the source code.
+      #
+      - name: Checkout the source code
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GIT_PAT }}
         
-      - name: Semantic release (dry-run)
+      #
+      # Calculation of the new version (dry-run).
+      #
+      - name: Calculation of the new version (dry-run)
         uses: cycjimmy/semantic-release-action@v3
         id: semantic
         env:
@@ -36,25 +37,41 @@ jobs:
             @semantic-release/git@10.0.1
           dry_run: true
 
-      - name: Set up JDK 17
+      #
+      # Setup the JDK.
+      #
+      - name: Setup the JDK
+        if: steps.semantic.outputs.new_release_published == 'true'
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
 
-      - name: Update the version in pom.xml
+      #
+      # Update of pom.xml with the new version.
+      #
+      - name: Update of pom.xml with the new version
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: mvn versions:set -DnewVersion=${{ steps.semantic.outputs.new_release_version }}
         
-      - name: Add + commit + tag + push pom.xml for the new version
+      #
+      # Add + commit + push of the updated pom.xml.
+      #
+      - name: Add + commit + push of the updated pom.xml
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "${{ github.actor }}"
+          git config user.email "<>"
           git add pom.xml
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
           git push origin main
 
-      - name: Semantic release
+      #
+      # Calculation of the new version (again) with tagging + releasing + etc.
+      #
+      - name: Calculation of the new version (again) with tagging + releasing + etc
+        if: steps.semantic.outputs.new_release_published == 'true'
         uses: cycjimmy/semantic-release-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -66,33 +83,42 @@ jobs:
             @semantic-release/git@10.0.1
           dry_run: false
 
-      - name: Build dependencies with Maven
+      #
+      # Build dependencies.
+      #
+      - name: Build dependencies
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: mvn clean validate -Pbootstrap
 
-      - name: Build ${{ env.IMAGE_NAME }} with Maven
+      #
+      # Build native image.
+      #
+      - name: Build native image
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: mvn clean package -Pnative
  
-      - name: Log in to the Container registry
+      #
+      # Login to the Container Registry.
+      #
+      - name: Login to the Container Registry
+        if: steps.semantic.outputs.new_release_published == 'true'
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
+      #
+      # Build and push Docker image.
+      #
       - name: Build and push Docker image
+        if: steps.semantic.outputs.new_release_published == 'true'
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
           file: src/main/docker/Dockerfile.native-micro
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.semantic.outputs.new_release_version }}"
       
       # DEPLOY ON AZURE
       # RUN IT
