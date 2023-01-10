@@ -41,7 +41,7 @@ jobs:
       # Setup the JDK.
       #
       - name: Setup the JDK
-        if: steps.semantic.outputs.new_release_published == true
+        if: steps.semantic.outputs.new_release_published == 'true'
         uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -52,14 +52,14 @@ jobs:
       # Update of pom.xml with the new version.
       #
       - name: Update of pom.xml with the new version
-        if: steps.semantic.outputs.new_release_published == true
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: mvn versions:set -DnewVersion=${{ steps.semantic.outputs.new_release_version }}
 
       #
       # Add + commit + push of the updated pom.xml.
       #
       - name: Add + commit + push of the updated pom.xml
-        if: steps.semantic.outputs.new_release_published == true
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           git config user.name "GitHub Workflow"
           git config user.email "<>"
@@ -71,7 +71,7 @@ jobs:
       # Calculation of the new version (again) with tagging + releasing + etc.
       #
       - name: Calculation of the new version (again) with tagging + releasing + etc
-        if: steps.semantic.outputs.new_release_published == true
+        if: steps.semantic.outputs.new_release_published == 'true'
         uses: cycjimmy/semantic-release-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -87,21 +87,21 @@ jobs:
       # Build dependencies.
       #
       - name: Build dependencies
-        if: steps.semantic.outputs.new_release_published == true
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: mvn clean validate -Pbootstrap
 
       #
       # Build native image.
       #
       - name: Build native image
-        if: steps.semantic.outputs.new_release_published == true
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: mvn clean package -Pnative
 
       #
       # Login to the Container Registry.
       #
       - name: Login to the Container Registry
-        if: steps.semantic.outputs.new_release_published == true
+        if: steps.semantic.outputs.new_release_published == 'true'
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -112,7 +112,7 @@ jobs:
       # Build and push Docker image.
       #
       - name: Build and push Docker image
-        if: steps.semantic.outputs.new_release_published == true
+        if: steps.semantic.outputs.new_release_published == 'true'
         uses: docker/build-push-action@v3
         with:
           context: .
