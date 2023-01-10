@@ -7,13 +7,19 @@ on:
     branches:
       - main
 
+  #pull_request:
+  #  types:
+  #    - closed
+  #  branches:
+  #    - main
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   release:
-    if: github.event.pull_request.merged == true
+    #if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
