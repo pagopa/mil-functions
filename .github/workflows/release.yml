@@ -46,17 +46,13 @@ jobs:
         
       - name: Add + commit + tag + push pom.xml for the new version
         run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-          
           url="${{ github.repositoryUrl }}"
-          token="${{ secrets.ACTIONS_TOKEN }}"
+          username="${{ secrets.GIT_USERNAME }}"
+          token="${{ secrets.GIT_PAT }}"
           replace="git://"
-          replace_with="https://${token}@"
+          replace_with="https://${username}:${token}@"
           new_url=$(echo ${url} | sed "s|${replace}|${replace_with}|")
-          
           git remote set-url origin ${new_url}
-          
           git add pom.xml
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
           git push origin main
