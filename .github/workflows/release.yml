@@ -44,22 +44,22 @@ jobs:
       - name: Update the version in pom.xml
         run: mvn versions:set -DnewVersion=${{ steps.semantic.outputs.new_release_version }}
         
-      - name: Add + commit + tag + push pom.xml for the new version
-        run: |
-          url="${{ github.repositoryUrl }}"
-          username="${{ secrets.GIT_USERNAME }}"
-          token="${{ secrets.GIT_PAT }}"
-          replace="git://"
-          replace_with="https://${username}:${token}@"
-          new_url=$(echo ${url} | sed "s|${replace}|${replace_with}|")
-          git config --list
-          git config user.email "${{ secrets.GIT_EMAIL }}"
-          git config user.name "${{ secrets.GIT_USERNAME }}"
-          git config user.password "${{ secrets.GIT_PAT }}"
-          git remote set-url origin ${new_url}
-          git add pom.xml
-          git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
-          git push origin main
+      #- name: Add + commit + tag + push pom.xml for the new version
+      #  run: |
+      #    url="${{ github.repositoryUrl }}"
+      #    username="${{ secrets.GIT_USERNAME }}"
+      #    token="${{ secrets.GIT_PAT }}"
+      #    replace="git://"
+      #    replace_with="https://${username}:${token}@"
+      #    new_url=$(echo ${url} | sed "s|${replace}|${replace_with}|")
+      #    git config --list
+      #    git config user.email "${{ secrets.GIT_EMAIL }}"
+      #    git config user.name "${{ secrets.GIT_USERNAME }}"
+      #    git config user.password "${{ secrets.GIT_PAT }}"
+      #    git remote set-url origin ${new_url}
+      #    git add pom.xml
+      #    git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
+      #    git push origin main
 
       - name: Semantic release
         uses: cycjimmy/semantic-release-action@v3
