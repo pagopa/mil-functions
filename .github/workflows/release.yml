@@ -47,7 +47,7 @@ jobs:
       - name: Add + commit + tag + push pom.xml for the new version
         run: |
           git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          git config user.email "${{ secrets.ACTIONS_EMAIL }}"
           git config user.password "${{ secrets.ACTIONS_TOKEN }}"
           git add pom.xml
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
