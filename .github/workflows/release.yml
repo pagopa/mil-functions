@@ -126,9 +126,9 @@ jobs:
       - name: Docker build + login + push
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
-          docker build -f src/main/docker/Dockerfile.native-micro -t ${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }} .
+          docker build -f src/main/docker/Dockerfile.native-micro -t ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }} .
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker push ${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }}
+          docker push ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }}
 
       # TODO: Deploy on Azure Container Apps
       # TODO: Run Integration Test
