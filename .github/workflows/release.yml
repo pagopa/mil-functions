@@ -123,6 +123,6 @@ jobs:
           file: src/main/docker/Dockerfile.native-micro
           tags: ${{ steps.semantic.outputs.new_release_version }}
 
-      # DEPLOY ON AZURE
-      # RUN IT
-      # RUN PERF-TEST
+      # TODO: Deploy on Azure Container Apps
+      # TODO: Run Integration Test
+      # TODO: Run Performance Test
