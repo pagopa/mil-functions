@@ -52,6 +52,9 @@ jobs:
           replace="git://"
           replace_with="https://${username}:${token}@"
           new_url=$(echo ${url} | sed "s|${replace}|${replace_with}|")
+          git config user.email "${{ secrets.GIT_EMAIL }}"
+          git config user.name "${{ secrets.GIT_USERNAME }}"
+          git config user.password "${{ secrets.GIT_PAT }}"
           git remote set-url origin ${new_url}
           git add pom.xml
           git commit -m "pom.xml updated with new version ${{ steps.semantic.outputs.new_release_version }}"
