@@ -52,6 +52,7 @@ jobs:
           replace="git://"
           replace_with="https://${username}:${token}@"
           new_url=$(echo ${url} | sed "s|${replace}|${replace_with}|")
+          git config --list
           git config user.email "${{ secrets.GIT_EMAIL }}"
           git config user.name "${{ secrets.GIT_USERNAME }}"
           git config user.password "${{ secrets.GIT_PAT }}"
