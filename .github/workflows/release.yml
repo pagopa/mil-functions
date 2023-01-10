@@ -56,9 +56,9 @@ jobs:
         run: mvn versions:set -DnewVersion=${{ steps.semantic.outputs.new_release_version }}
 
       #
-      # Add + commit + push of the updated pom.xml.
+      # Git add + commit + push of the updated pom.xml.
       #
-      - name: Add + commit + push of the updated pom.xml
+      - name: Git add + commit + push of the updated pom.xml
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           git config user.name "GitHub Workflow"
@@ -96,29 +96,6 @@ jobs:
       - name: Build native image
         if: steps.semantic.outputs.new_release_published == 'true'
         run: mvn clean package -Pnative
-
-      #
-      # Login to the Container Registry.
-      #
-      #- name: Login to the Container Registry
-      #  if: steps.semantic.outputs.new_release_published == 'true'
-      #  uses: docker/login-action@v2
-      #  with:
-      #    registry: ghcr.io
-      #    username: ${{ github.actor }}
-      #    password: ${{ secrets.GITHUB_TOKEN }}
-
-      #
-      # Build and push Docker image.
-      #
-      #- name: Build and push Docker image
-      #  if: steps.semantic.outputs.new_release_published == 'true'
-      #  uses: docker/build-push-action@v3
-      #  with:
-      #    context: .
-      #    push: true
-      #    file: src/main/docker/Dockerfile.native-micro
-      #    tags: ${{ steps.semantic.outputs.new_release_version }}
 
       #
       # Docker build + login + push
