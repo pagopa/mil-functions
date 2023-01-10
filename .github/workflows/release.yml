@@ -11,8 +11,6 @@ jobs:
   release:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    
-    permissions: read-all|write-all
 
     steps:
       #
@@ -21,7 +19,7 @@ jobs:
       - name: Checkout the source code
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GIT_PAT }}
 
       #
       # Calculation of the new version (dry-run).
@@ -102,25 +100,35 @@ jobs:
       #
       # Login to the Container Registry.
       #
-      - name: Login to the Container Registry
-        if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      #- name: Login to the Container Registry
+      #  if: steps.semantic.outputs.new_release_published == 'true'
+      #  uses: docker/login-action@v2
+      #  with:
+      #    registry: ghcr.io
+      #    username: ${{ github.actor }}
+      #    password: ${{ secrets.GITHUB_TOKEN }}
 
       #
       # Build and push Docker image.
       #
-      - name: Build and push Docker image
+      #- name: Build and push Docker image
+      #  if: steps.semantic.outputs.new_release_published == 'true'
+      #  uses: docker/build-push-action@v3
+      #  with:
+      #    context: .
+      #    push: true
+      #    file: src/main/docker/Dockerfile.native-micro
+      #    tags: ${{ steps.semantic.outputs.new_release_version }}
+
+      #
+      # Docker build + login + push
+      #
+      - name: Docker build + login + push
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          file: src/main/docker/Dockerfile.native-micro
-          tags: ${{ steps.semantic.outputs.new_release_version }}
+        run: |
+          docker build -f src/main/docker/Dockerfile.native-micro -t ${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }}" .
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker push ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }}"
 
       # TODO: Deploy on Azure Container Apps
       # TODO: Run Integration Test
