@@ -12,8 +12,7 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     
-    permissions:
-      packages: write
+    permissions: read-all|write-all
 
     steps:
       #
@@ -22,7 +21,7 @@ jobs:
       - name: Checkout the source code
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GIT_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       #
       # Calculation of the new version (dry-run).
