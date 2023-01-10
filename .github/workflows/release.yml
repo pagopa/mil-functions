@@ -118,7 +118,7 @@ jobs:
           context: .
           push: true
           file: src/main/docker/Dockerfile.native-micro
-          tags: ${{ steps.semantic.outputs.new_release_version }}"
+          tags: ${{ steps.semantic.outputs.new_release_version }}
       
       # DEPLOY ON AZURE
       # RUN IT
