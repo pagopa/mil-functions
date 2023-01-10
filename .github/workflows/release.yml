@@ -1,12 +1,11 @@
 name: Release a new version
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
-    paths-ignore:
-      - 'CODEOWNERS'
-      - '**.md'
 
   #pull_request:
   #  types:
