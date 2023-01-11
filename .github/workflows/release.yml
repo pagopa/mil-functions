@@ -49,18 +49,12 @@ jobs:
           cache: maven
 
       #
-      # Update of pom.xml with the new version.
+      # Update of pom.xml with the new version + Git add + commit + push of the updated pom.xml.
       #
-      - name: Update of pom.xml with the new version
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: mvn versions:set -DnewVersion=${{ steps.semantic.outputs.new_release_version }}
-
-      #
-      # Git add + commit + push of the updated pom.xml.
-      #
-      - name: Git add + commit + push of the updated pom.xml
+      - name: Update of pom.xml with the new version + Git add + commit + push of the updated pom.xml
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
+          mvn versions:set -DnewVersion=${{ steps.semantic.outputs.new_release_version }}
           git config user.name "GitHub Workflow"
           git config user.email "<>"
           git add pom.xml
@@ -84,25 +78,13 @@ jobs:
           dry_run: false
 
       #
-      # Build dependencies.
+      # Build dependencies + Build native image + Docker build + login + push.
       #
-      - name: Build dependencies
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: mvn clean validate -Pbootstrap
-
-      #
-      # Build native image.
-      #
-      - name: Build native image
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: mvn clean package -Pnative
-
-      #
-      # Docker build + login + push
-      #
-      - name: Docker build + login + push
+      - name: Build dependencies + Build native image + Docker build + login + push
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
+          mvn clean validate -Pbootstrap
+          mvn clean package -Pnative
           docker build -f src/main/docker/Dockerfile.native-micro -t ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }} .
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker push ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }}
