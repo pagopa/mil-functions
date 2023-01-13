@@ -10,7 +10,12 @@ on:
 jobs:
   release:
     if: github.event.pull_request.merged == true
+    
     runs-on: ubuntu-latest
+    
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
 
     steps:
       #
@@ -89,6 +94,39 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker push ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }}
 
-      # TODO: Deploy on Azure Container Apps
+  deploy:
+    needs: release
+    
+    if: needs.release.outputs.new_release_published == 'true'
+    
+    runs-on: ubuntu-latest
+    
+    environment: dev-cd
+    
+    permissions:
+      id-token: write
+
+    steps:
+      #
+      # Login to Azure.
+      #
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      #
+      # Deploy Container App.
+      #
+      - name: Deploy Container App
+        uses: azure/container-apps-deploy-action@v0
+        with:
+          imageToDeploy: ghcr.io/${{ github.repository }}:${{ needs.release.outputs.new_release_version }}
+          containerAppEnvironment: ${{ secrets.AZURE_CONTAINER_APP_ENVIRONMENT_NAME }}
+          containerAppName: ${{ secrets.AZURE_CONTAINER_APP_NAME }}
+          resourceGroup: ${{ secrets.AZURE_RESOURCE_GROUP_NAME }}
+      
       # TODO: Run Integration Test
       # TODO: Run Performance Test
