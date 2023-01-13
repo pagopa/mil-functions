@@ -17,12 +17,14 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Build and deploy Container App
+      - name: Deploy Container App
         uses: azure/container-apps-deploy-action@v0
         with:
           imageToDeploy: ghcr.io/${{ github.repository }}:1.0.36
           containerAppEnvironment: ${{ secrets.AZURE_CONTAINER_APP_ENVIRONMENT_NAME }}
           containerAppName: mil-d-init-ca
+          resourceGroup: mil-d-app-rg
+
       
       # TODO: Run Integration Test
       # TODO: Run Performance Test
