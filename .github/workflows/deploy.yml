@@ -1,4 +1,4 @@
-name: Release a new version
+name: Deploy a new version
 
 on: workflow_dispatch
 
@@ -6,6 +6,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: dev-cd
+    permissions:
+      id-token: write
 
     steps:
       - name: Login to Azure
