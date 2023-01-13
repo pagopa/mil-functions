@@ -1,0 +1,45 @@
+name: Deploy a new version
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    environment: dev-cd
+    
+    permissions:
+      id-token: write
+
+    steps:
+      #
+      # Login to Azure.
+      #
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      #
+      # Checkout the source code.
+      #
+      - name: Checkout the source code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GIT_PAT }}
+      
+      #
+      # Run Terraform.
+      #
+      - name: Run Terraform
+        run: |
+          cd src/main/terraform
+          sh terraform.sh plan dev
+        env:
+          TF_VAR_image: ghcr.io/${{ github.repository }}
+      
+      
+      # TODO: Run Integration Test
+      # TODO: Run Performance Test
