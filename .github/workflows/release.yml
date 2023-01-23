@@ -95,19 +95,19 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker push ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }}
 
-  deploy:
-    needs: release
-    
-    if: needs.release.outputs.new_release_published == 'true'
-    
-    runs-on: ubuntu-latest
-    
-    environment: dev-cd
-    
-    permissions:
-      id-token: write
-
-    steps:
+  #deploy:
+  #  needs: release
+  #  
+  #  if: needs.release.outputs.new_release_published == 'true'
+  #  
+  #  runs-on: ubuntu-latest
+  #  
+  #  environment: dev-cd
+  #  
+  #  permissions:
+  #    id-token: write
+  #
+  #  steps:
       #
       # Login to Azure.
       #
