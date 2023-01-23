@@ -44,7 +44,7 @@ jobs:
       - name: Run Terraform
         run: |
           cd src/main/terraform/deploy
-          sh terraform.sh plan dev
+          terraform.sh plan dev
         env:
           TF_VAR_image: ghcr.io/${{ github.repository }}
       
