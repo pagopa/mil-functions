@@ -40,7 +40,7 @@
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
 
-		<common.version>1.0.4</common.version>
+		<common.version>1.1.5</common.version>
 	</properties>
 
 	<dependencyManagement>
