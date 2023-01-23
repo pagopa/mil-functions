@@ -99,6 +99,7 @@ class ServicesResourceTest {
 				"Version", "1.0.0",
 				"AcquirerId", "12345",
 				"Channel", "POS",
+				"MerchantId", "123456789012345",
 				"TerminalId", "12345678")
 			.when()
 			.get()
