@@ -93,7 +93,7 @@ jobs:
           mvn clean package -Pnative
           docker build -f src/main/docker/Dockerfile.native-micro -t ghcr.io/${{ github.repository }}:latest -t ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }} .
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker push ghcr.io/${{ github.repository }}:${{ steps.semantic.outputs.new_release_version }}
+          docker push -a ghcr.io/${{ github.repository }}
 
   deploy:
     needs: release
