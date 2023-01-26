@@ -125,7 +125,6 @@ jobs:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp update -n ${{ secrets.AZURE_CONTAINER_APP_NAME }} -g ${{ secrets.AZURE_RESOURCE_GROUP_NAME }} --image ghcr.io/${{ github.repository }}:${{ needs.release.outputs.new_release_version }}
-
       
       # TODO: Run Integration Test
       # TODO: Run Performance Test
