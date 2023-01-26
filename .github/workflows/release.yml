@@ -104,8 +104,8 @@ jobs:
     
     environment: dev-cd
     
-    #permissions:
-    #  id-token: write
+    permissions:
+      id-token: write
 
     steps:
       #
