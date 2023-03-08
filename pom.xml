@@ -215,7 +215,7 @@
 							<execution>
 								<id>prepare-agent</id>
 								<!-- after testCompile -->
-								<phase>testCompile</phase>
+								<phase>test-compile</phase>
 								<goals>
 									<goal>prepare-agent</goal>
 								</goals>
