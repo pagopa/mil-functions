@@ -1,0 +1,32 @@
+name: Validate the main branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  pr-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build dependencies with Maven
+        run: mvn clean validate -Pbootstrap
+      
+      - name: SCA with Sonar
+        run: mvn sonar:sonar \
+               -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+               -Dsonar.host.url=https://sonarcloud.io \
+               -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION_KEY }} \
+               -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+
+      - name: Execute unit-testing
+        run: mvn clean test

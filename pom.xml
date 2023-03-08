@@ -24,8 +24,11 @@
 
 		<compiler-plugin.version>3.10.1</compiler-plugin.version>
 		<surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
+		
+		<!--
 		<sonar-plugin.version>3.7.0.1746</sonar-plugin.version>
-
+		-->
+		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -35,11 +38,13 @@
 
 		<skipITs>true</skipITs>
 
+		<!--
 		<sonar.host.url>https://sonarcloud.io:443/</sonar.host.url>
 		<sonar.organization>pagopa</sonar.organization>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
-
+		-->
+		
 		<common.version>1.1.5</common.version>
 	</properties>
 
@@ -213,6 +218,7 @@
 		<!-- To execute SCA with SonarCloud:                                      -->
 		<!--   1. export SONAR_TOKEN=<sonar token provided by PagoPA DevOps team> -->
 		<!--   2. mvn clean test -Pvalidate                                       -->
+		<!--
 		<profile>
 			<id>validate</id>
 			<activation>
@@ -239,6 +245,7 @@
 				</plugins>
 			</build>
 		</profile>
+		-->
 
 		<!-- To build native image:       -->
 		<!--   mvn clean package -Pnative -->
