@@ -38,6 +38,7 @@
 
 		<sonar.host.url>https://sonarcloud.io:443/</sonar.host.url>
 		<sonar.organization>pagopa</sonar.organization>
+		<sonar.projectKey>pagopa_mil-functions</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
 		
@@ -213,7 +214,7 @@
 
 		<!-- To execute SCA with SonarCloud:                                      -->
 		<!--   1. export SONAR_TOKEN=<sonar token provided by PagoPA DevOps team> -->
-		<!--   2. mvn clean test -Pvalidate                                       -->
+		<!--   2. mvn clean compile -Pvalidate                                       -->
 		<profile>
 			<id>validate</id>
 			<activation>
@@ -230,7 +231,7 @@
 						<executions>
 							<execution>
 								<id>sca_with_sonar</id>
-								<phase>test</phase>
+								<phase>compile</phase>
 								<goals>
 									<goal>sonar</goal>
 								</goals>
