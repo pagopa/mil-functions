@@ -213,7 +213,7 @@
 
 		<!-- To execute SCA with SonarCloud:                                      -->
 		<!--   1. export SONAR_TOKEN=<sonar token provided by PagoPA DevOps team> -->
-		<!--   2. mvn clean validate -Pvalidate                                       -->
+		<!--   2. mvn clean test -Pvalidate                                       -->
 		<profile>
 			<id>validate</id>
 			<activation>
@@ -230,8 +230,7 @@
 						<executions>
 							<execution>
 								<id>sca_with_sonar</id>
-								<!-- <phase>test</phase> -->
-								<phase>validate</phase>
+								<phase>test</phase>
 								<goals>
 									<goal>sonar</goal>
 								</goals>
