@@ -32,7 +32,7 @@
 		<sonar.projectKey>pagopa_mil-functions</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
-		<sonar.coverage.jacoco.xmlReportPaths>target/jacoco-reports</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.coverage.jacoco.xmlReportPaths>target/jacoco-report/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<common.version>1.1.5</common.version>
 	</properties>
 	<dependencyManagement>
