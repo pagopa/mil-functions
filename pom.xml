@@ -234,6 +234,7 @@
 						</executions>
 					</plugin>
 					<!-- SCA with Sonar -->
+					<!--
 					<plugin>
 						<groupId>org.sonarsource.scanner.maven</groupId>
 						<artifactId>sonar-maven-plugin</artifactId>
@@ -241,13 +242,14 @@
 						<executions>
 							<execution>
 								<id>sca_with_sonar</id>
-								<!--<phase>test</phase>-->
+								<phase>test</phase>
 								<goals>
 									<goal>sonar</goal>
 								</goals>
 							</execution>
 						</executions>
 					</plugin>
+					-->
 				</plugins>
 			</build>
 		</profile>
