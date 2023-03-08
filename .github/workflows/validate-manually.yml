@@ -19,9 +19,9 @@ jobs:
           cache: maven
 
       - name: Build dependencies with Maven
-        run: mvn clean validate -Pbootstrap
+        run: mvn clean validate -Pbootstrap --no-transfer-progress
       
       - name: SCA with Sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn clean test -Pvalidate
+        run: mvn clean test -Pvalidate --no-transfer-progress
