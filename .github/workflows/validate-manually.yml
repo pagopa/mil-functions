@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -19,12 +21,9 @@ jobs:
           cache: maven
 
       - name: Build dependencies with Maven
-        run: mvn clean validate -Pbootstrap
+        run: mvn clean validate -Pbootstrap --no-transfer-progress
       
       - name: SCA with Sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn clean validate -Pvalidate
-
-      - name: Execute unit-testing
-        run: mvn clean test
+        run: mvn clean test -Pvalidate --no-transfer-progress
