@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>it.gov.pagopa.swclient.mil</groupId>
 	<artifactId>functions</artifactId>
 	<version>1.1.0</version>
-
 	<description>Handling of service list for Multi-channel Integration Layer of SW Client Project</description>
-
 	<developers>
 		<developer>
 			<name>Antonio Tarricone</name>
@@ -15,36 +12,28 @@
 			<organization>PagoPA S.p.A.</organization>
 		</developer>
 	</developers>
-
 	<properties>
 		<java.version>17</java.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
-
 		<compiler-plugin.version>3.10.1</compiler-plugin.version>
 		<surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
-		
 		<sonar-plugin.version>3.7.0.1746</sonar-plugin.version>
-		
+		<jacoco-plugin.version>0.8.7</jacoco-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
 		<quarkus.platform.version>2.16.1.Final</quarkus.platform.version>
-
 		<skipITs>true</skipITs>
-
 		<sonar.host.url>https://sonarcloud.io:443/</sonar.host.url>
 		<sonar.organization>pagopa</sonar.organization>
 		<sonar.projectKey>pagopa_mil-functions</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
-		
 		<common.version>1.1.5</common.version>
 	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -56,7 +45,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<dependencies>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -104,7 +92,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -122,7 +109,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${compiler-plugin.version}</version>
@@ -139,7 +125,6 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
@@ -150,7 +135,6 @@
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
@@ -172,7 +156,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<profiles>
 		<!-- To clone and install dependencies:                                 -->
 		<!--   mvn clean validate -Pbootstrap -Dmaven.home=<path to Maven home> -->
@@ -211,7 +194,6 @@
 				</plugins>
 			</build>
 		</profile>
-
 		<!-- To execute SCA with SonarCloud:                                      -->
 		<!--   1. export SONAR_TOKEN=<sonar token provided by PagoPA DevOps team> -->
 		<!--   2. mvn clean compile -Pvalidate                                       -->
@@ -224,6 +206,32 @@
 			</activation>
 			<build>
 				<plugins>
+					<!-- Test Coverage with JaCoCo -->
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>${jacoco-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report</id>
+								<goals>
+									<goal>report</goal>
+								</goals>
+								<configuration>
+									<formats>
+										<format>XML</format>
+									</formats>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- SCA with Sonar -->
 					<plugin>
 						<groupId>org.sonarsource.scanner.maven</groupId>
 						<artifactId>sonar-maven-plugin</artifactId>
@@ -241,7 +249,6 @@
 				</plugins>
 			</build>
 		</profile>
-
 		<!-- To build native image:       -->
 		<!--   mvn clean package -Pnative -->
 		<profile>
