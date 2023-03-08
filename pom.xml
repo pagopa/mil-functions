@@ -91,6 +91,11 @@
 			<artifactId>quarkus-panache-mock</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-jacoco</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -207,6 +212,7 @@
 			<build>
 				<plugins>
 					<!-- Test Coverage with JaCoCo -->
+					<!--
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
@@ -214,7 +220,6 @@
 						<executions>
 							<execution>
 								<id>prepare-agent</id>
-								<!-- after testCompile -->
 								<phase>test-compile</phase>
 								<goals>
 									<goal>prepare-agent</goal>
@@ -222,7 +227,6 @@
 							</execution>
 							<execution>
 								<id>report</id>
-								<!-- after test -->
 								<phase>test</phase>
 								<goals>
 									<goal>report</goal>
@@ -235,6 +239,7 @@
 							</execution>
 						</executions>
 					</plugin>
+					-->
 					<!-- SCA with Sonar -->
 					<plugin>
 						<groupId>org.sonarsource.scanner.maven</groupId>
