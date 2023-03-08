@@ -214,14 +214,14 @@
 						<executions>
 							<execution>
 								<id>prepare-agent</id>
-								<phase>compile</phase>
+								<!--<phase>compile</phase>-->
 								<goals>
 									<goal>prepare-agent</goal>
 								</goals>
 							</execution>
 							<execution>
 								<id>report</id>
-								<phase>test</phase>
+								<!--<phase>test</phase>-->
 								<goals>
 									<goal>report</goal>
 								</goals>
@@ -241,7 +241,7 @@
 						<executions>
 							<execution>
 								<id>sca_with_sonar</id>
-								<phase>test</phase>
+								<!--<phase>test</phase>-->
 								<goals>
 									<goal>sonar</goal>
 								</goals>
