@@ -28,7 +28,7 @@
 		<quarkus.platform.version>2.16.1.Final</quarkus.platform.version>
 		<skipITs>true</skipITs>
 		<sonar.host.url>https://sonarcloud.io:443/</sonar.host.url>
-		<sonar.organization>${env.SONAR_ORGANIZATION_KEY}</sonar.organization>
+		<sonar.organization>pagopa</sonar.organization>
 		<sonar.projectKey>${env.SONAR_PROJECT_KEY}</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
