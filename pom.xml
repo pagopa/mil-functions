@@ -28,8 +28,8 @@
 		<quarkus.platform.version>2.16.1.Final</quarkus.platform.version>
 		<skipITs>true</skipITs>
 		<sonar.host.url>https://sonarcloud.io:443/</sonar.host.url>
-		<sonar.organization>pagopa</sonar.organization>
-		<sonar.projectKey>pagopa_mil-functions</sonar.projectKey>
+		<sonar.organization>${env.SONAR_ORGANIZATION_KEY}</sonar.organization>
+		<sonar.projectKey>${env.SONAR_PROJECT_KEY}</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
 		<sonar.coverage.jacoco.xmlReportPaths>target/jacoco-report/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
