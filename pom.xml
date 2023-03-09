@@ -4,9 +4,10 @@
 	
 	<groupId>it.gov.pagopa.swclient.mil</groupId>
 	<artifactId>functions</artifactId>
-	<version>1.1.0</version>
-	
-	<description>Handling of service list for Multi-channel Integration Layer of SW Client Project</description>
+
+	<version>1.2.3</version>
+
+  <description>Handling of service list for Multi-channel Integration Layer of SW Client Project</description>
 	
 	<developers>
 		<developer>
