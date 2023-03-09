@@ -1,4 +1,4 @@
-name: Build e deploy manually
+name: Build e deploy manually (DRAFT)
 
 on:
   workflow_dispatch:
