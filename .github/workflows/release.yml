@@ -68,6 +68,13 @@ jobs:
           git push origin main
 
       #
+      # Sleep for 60s to avoid this issue: https://github.com/semantic-release/semantic-release/issues/2204
+      #
+      - name: Sleep for 60s to avoid the issue 2204
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: sleep 60s
+
+      #
       # Calculation of the new version (again) with tagging + releasing + etc.
       #
       - name: Calculation of the new version (again) with tagging + releasing + etc
@@ -90,7 +97,6 @@ jobs:
         if: steps.semantic.outputs.new_release_published == 'true'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
         run: |
           mvn clean validate -Pbootstrap --no-transfer-progress
           mvn verify -Pvalidate --no-transfer-progress
