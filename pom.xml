@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.gov.pagopa.swclient.mil</groupId>
 	<artifactId>functions</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.1</version>
 	<description>Handling of service list for Multi-channel Integration Layer of SW Client Project</description>
 	<developers>
 		<developer>
@@ -29,7 +29,7 @@
 		<skipITs>true</skipITs>
 		<sonar.host.url>https://sonarcloud.io:443/</sonar.host.url>
 		<sonar.organization>pagopa</sonar.organization>
-		<sonar.projectKey>pagopa_mil-functions</sonar.projectKey>
+		<sonar.projectKey>${env.SONAR_PROJECT_KEY}</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
 		<sonar.coverage.jacoco.xmlReportPaths>target/jacoco-report/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
