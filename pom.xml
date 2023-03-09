@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>it.gov.pagopa.swclient.mil</groupId>
 	<artifactId>functions</artifactId>
 	<version>1.1.0</version>
+	
 	<description>Handling of service list for Multi-channel Integration Layer of SW Client Project</description>
+	
 	<developers>
 		<developer>
 			<name>Antonio Tarricone</name>
@@ -12,6 +15,7 @@
 			<organization>PagoPA S.p.A.</organization>
 		</developer>
 	</developers>
+	
 	<properties>
 		<java.version>17</java.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
@@ -41,6 +45,7 @@
 		
 		<common.version>1.1.5</common.version>
 	</properties>
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -52,6 +57,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
 	<dependencies>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -104,6 +110,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -121,6 +128,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${compiler-plugin.version}</version>
@@ -137,6 +145,7 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
@@ -147,6 +156,7 @@
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
@@ -168,6 +178,7 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 	<profiles>
 		<!-- To clone and install dependencies:                                 -->
 		<!--   mvn clean validate -Pbootstrap -Dmaven.home=<path to Maven home> -->
@@ -206,6 +217,7 @@
 				</plugins>
 			</build>
 		</profile>
+		
 		<!-- To execute SCA with SonarCloud:                                      -->
 		<!--   1. export SONAR_TOKEN=<sonar token provided by PagoPA DevOps team> -->
 		<!--   2. mvn verify -Pvalidate                                       -->
@@ -266,6 +278,7 @@
 				</plugins>
 			</build>
 		</profile>
+		
 		<!-- To build native image:       -->
 		<!--   mvn clean package -Pnative -->
 		<profile>
