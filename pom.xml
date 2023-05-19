@@ -2,7 +2,7 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>it.gov.pagopa.swclient.mil</groupId>
+	<groupId>it.pagopa.swclient.mil</groupId>
 	<artifactId>functions</artifactId>
 
 	<version>1.2.4</version>
@@ -33,7 +33,7 @@
 		
 		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-		<quarkus.platform.version>2.16.1.Final</quarkus.platform.version>
+		<quarkus.platform.version>3.0.2.Final</quarkus.platform.version>
 		
 		<skipITs>true</skipITs>
 		
@@ -44,7 +44,7 @@
 		<sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>
 		<sonar.coverage.jacoco.xmlReportPaths>target/jacoco-report/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		
-		<common.version>1.1.5</common.version>
+		<common.version>2.0.1</common.version>
 	</properties>
 	
 	<dependencyManagement>
@@ -77,7 +77,7 @@
 			<artifactId>quarkus-mongodb-panache</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>it.gov.pagopa.swclient.mil</groupId>
+			<groupId>it.pagopa.swclient.mil</groupId>
 			<artifactId>common</artifactId>
 			<version>${common.version}</version>
 		</dependency>
@@ -110,6 +110,10 @@
 			<artifactId>quarkus-jacoco</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+		    <groupId>io.quarkus</groupId>
+		    <artifactId>quarkus-rest-client-reactive-jackson</artifactId>
+	    </dependency>
 	</dependencies>
 	
 	<build>

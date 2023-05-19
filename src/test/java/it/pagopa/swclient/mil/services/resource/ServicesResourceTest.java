@@ -3,7 +3,7 @@
  *
  * 29 nov 2022
  */
-package it.gov.pagopa.swclient.mil.services.resource;
+package it.pagopa.swclient.mil.services.resource;
 
 import static io.restassured.RestAssured.given;
 
@@ -19,11 +19,12 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.smallrye.mutiny.Uni;
-import it.gov.pagopa.swclient.mil.services.bean.Labels;
-import it.gov.pagopa.swclient.mil.services.bean.Service;
-import it.gov.pagopa.swclient.mil.services.bean.Services;
-import it.gov.pagopa.swclient.mil.services.dao.ServicesEntity;
-import it.gov.pagopa.swclient.mil.services.dao.ServicesRepository;
+import it.pagopa.swclient.mil.services.bean.Labels;
+import it.pagopa.swclient.mil.services.bean.Service;
+import it.pagopa.swclient.mil.services.bean.Services;
+import it.pagopa.swclient.mil.services.dao.ServicesEntity;
+import it.pagopa.swclient.mil.services.dao.ServicesRepository;
+import it.pagopa.swclient.mil.services.resource.ServicesResource;
 
 /**
  * 
