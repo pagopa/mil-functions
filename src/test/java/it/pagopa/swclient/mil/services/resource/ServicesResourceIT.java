@@ -3,7 +3,7 @@
  *
  * 29 nov 2022
  */
-package it.gov.pagopa.swclient.mil.services.resource;
+package it.pagopa.swclient.mil.services.resource;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
